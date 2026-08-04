@@ -2,12 +2,15 @@
 
 Danish Parliament (Folketinget) open data MCP — oda.ft.dk, an OData v3 API.
 
-Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 673+ live data sources.
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1394+ live data sources.
 
 ## Tools
 
 | Tool | Description |
 |------|-------------|
+| `query_entity` | Query a Folketinget (Danish Parliament) OData v3 entity collection. Returns matching rows under the `value` array. Fields and values are in Danish (e.g. titel=title, navn=name, opdateringsdato=last-updated). Supports OData $filter/$orderby/$expand/$select with $top/$skip paging. Example filters: "year(opdateringsdato) eq 2024", "substringof('klima',titel)", "typeid eq 3". |
+| `get_entity_by_id` | Fetch a single Folketinget entity record by its numeric id, e.g. Sag(1). Returns the record object directly (not wrapped in `value`). Use $expand to inline related entities. |
+| `search_cases` | Convenience search over Sag (cases/bills): finds cases whose Danish title (titel) contains a substring. Sorted by most recently updated. Use this to look up legislation/matters by keyword; for full control use query_entity. |
 
 ## Quick Start
 
@@ -23,7 +26,7 @@ Add to your MCP client (Claude Desktop, Cursor, Windsurf, etc.):
 }
 ```
 
-Or connect to the full Pipeworx gateway for access to all 673+ data sources:
+Or connect to the full Pipeworx gateway for access to all 1394+ data sources:
 
 ```json
 {
@@ -47,7 +50,7 @@ The gateway picks the right tool and fills the arguments automatically.
 
 ## More
 
-- [All tools and guides](https://github.com/pipeworx-io/examples)
+- [Docs and guides](https://pipeworx.io/docs)
 - [pipeworx.io](https://pipeworx.io)
 
 ## License
