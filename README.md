@@ -1,16 +1,29 @@
-# mcp-folketinget-dk
+# folketinget-dk
 
-Danish Parliament (Folketinget) open data MCP — oda.ft.dk, an OData v3 API.
+Danish Parliament (Folketinget) open data: cases, actors, votes, meetings and
+documents, plus the full text of a published document.
 
-Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1866+ live data sources. This is an independent, unofficial integration — not affiliated with, endorsed by, or published by the upstream provider.
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1879+ live data sources. This is an independent, unofficial integration — not affiliated with, endorsed by, or published by the upstream provider.
+
+Source: Folketinget, parliamentary data service and document register. Keyless,
+live, public. Field names and values are Danish.
 
 ## Tools
 
-| Tool | Description |
-|------|-------------|
-| `query_entity` | Query a Folketinget (Danish Parliament) OData v3 entity collection. Returns matching rows under the `value` array. Fields and values are in Danish (e.g. titel=title, navn=name, opdateringsdato=last-updated). Supports OData $filter/$orderby/$expand/$select with $top/$skip paging. Example filters: "year(opdateringsdato) eq 2024", "substringof('klima',titel)", "typeid eq 3". |
-| `get_entity_by_id` | Fetch a single Folketinget entity record by its numeric id, e.g. Sag(1). Returns the record object directly (not wrapped in `value`). Use $expand to inline related entities. |
-| `search_cases` | Convenience search over Sag (cases/bills): finds cases whose Danish title (titel) contains a substring. Sorted by most recently updated. Use this to look up legislation/matters by keyword; for full control use query_entity. |
+- `query_entity` -- OData query over any entity (`Sag`, `Aktør`, `Afstemning`, `Møde`, `Dokument`, ...).
+- `get_entity_by_id` -- one record by numeric id, with `$expand`.
+- `search_cases` -- cases/bills whose title contains a substring.
+- `document_text` -- the extracted TEXT of a `Dokument` by id (a minister's
+  answer to a committee question, a bill text, ...). Returns title, date,
+  question wording, who answered, the text, and a `reason` whenever no text
+  could be returned (`no_file`, `file_blocked`, `no_extractable_text`, ...), so
+  an empty result is never ambiguous. The file format is detected from the
+  bytes, not from the declared format. Long texts page with `offset`/`max_chars`.
+
+## Provenance
+
+Every `document_text` response carries `source` ("Folketinget, parliamentary
+document register"), the document id and `data_as_of`.
 
 ## Quick Start
 
@@ -56,19 +69,19 @@ directly, instead of just this one's:
 }
 ```
 
-Both URLs reach the same gateway and the same 1866+ data sources. The
+Both URLs reach the same gateway and the same 1879+ data sources. The
 only difference is which pack's tools are listed **directly**; `ask_pipeworx`
 reaches all of them from either one.
 
 ## No MCP client? Call it over HTTP
 
 ```bash
-curl -X POST https://gateway.pipeworx.io/v1/tools/folketinget_dk_query_entity \
+curl -X POST https://gateway.pipeworx.io/v1/tools/query_entity \
   -H 'Content-Type: application/json' \
   -d '{"entity":"Sag","filter":"year(opdateringsdato) eq 2024","top":10,"orderby":"opdateringsdato desc"}'
 ```
 
-No account needed for the first calls. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/folketinget_dk_query_entity`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.
+No account needed for the first calls. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/query_entity`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.
 
 ## Standalone (no gateway account)
 

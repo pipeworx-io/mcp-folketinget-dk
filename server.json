@@ -3,7 +3,7 @@
   "name": "io.github.pipeworx-io/folketinget-dk",
   "title": "Folketinget Dk",
   "description": "Danish Parliament (Folketinget) open data MCP — oda.ft.dk, an OData v3 API.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "websiteUrl": "https://pipeworx.io/packs/folketinget-dk",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-folketinget-dk",
