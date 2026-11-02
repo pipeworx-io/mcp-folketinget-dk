@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-folketinget-dk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Danish Parliament (Folketinget) open data MCP — oda.ft.dk, an OData v3 API.",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "folketinget-dk",
     "gatewaySlug": "folketinget-dk",
-    "sourceHash": "v1-57e93b8b54aa90ad8f2af9baa20d9772edffb88bcfcb339d84707a35d75f52d8",
-    "sourceCommit": "bb047243cf27f32453103de186b8e6a8b6a1ce79"
+    "sourceHash": "v1-1a3ab7c14f05482dab455b6a2c8f14765a2860cc2d2846bd7181150bc198c1ba",
+    "sourceCommit": "030233f6b150a38a44421f88a5fcbad123f0fea8"
   }
 }
